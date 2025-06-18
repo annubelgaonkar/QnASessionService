@@ -1,6 +1,7 @@
 package dev.qna.qna_session_service.service;
 
 import dev.qna.qna_session_service.Client.LLMClient;
+import dev.qna.qna_session_service.dto.BaseResponseDTO;
 import dev.qna.qna_session_service.dto.SessionResponseDTO;
 import dev.qna.qna_session_service.dto.StartSessionRequestDTO;
 import dev.qna.qna_session_service.dto.UpdateSessionRequestDTO;
@@ -8,6 +9,7 @@ import dev.qna.qna_session_service.dto.llm.EvaluationRequestDTO;
 import dev.qna.qna_session_service.dto.llm.EvaluationResponseDTO;
 import dev.qna.qna_session_service.dto.llm.QuestionRequestDTO;
 import dev.qna.qna_session_service.dto.llm.QuestionResponseDTO;
+import dev.qna.qna_session_service.exception.SessionNotFoundException;
 import dev.qna.qna_session_service.model.PracticeSession;
 import dev.qna.qna_session_service.repository.PracticeSessionRepository;
 import lombok.AllArgsConstructor;
@@ -24,13 +26,15 @@ public class SessionServiceImpl implements SessionService {
     public SessionResponseDTO startSession(StartSessionRequestDTO request) {
         QuestionRequestDTO questionReq = new QuestionRequestDTO(
                 request.getTopic(), request.getDifficulty());
-        QuestionResponseDTO questionRes = llmClient.generateQuestion(questionReq);
+        BaseResponseDTO<QuestionResponseDTO> questionRes = llmClient.generateQuestion(questionReq);
+
+        QuestionResponseDTO question = questionRes.getData();
 
         PracticeSession session = PracticeSession.builder()
                 .email(request.getEmail())
-                .topic(questionRes.getTopic())
-                .difficulty(questionRes.getDifficulty())
-                .question(questionRes.getQuestionText())
+                .topic(question.getTopic())
+                .difficulty(question.getDifficulty())
+                .question(question.getQuestionText())
                 .status("IN_PROGRESS")
                 .build();
 
@@ -42,17 +46,18 @@ public class SessionServiceImpl implements SessionService {
     @Override
     public SessionResponseDTO updateSession(UpdateSessionRequestDTO request) {
         PracticeSession session = practiceSessionRepository.findById(request.getSessionId())
-                .orElseThrow(() -> new RuntimeException("Session not found"));
+                .orElseThrow(() -> new SessionNotFoundException("Session not found with id: " + request.getSessionId()));
 
         EvaluationRequestDTO evalReq = new EvaluationRequestDTO();
         evalReq.setTopic(session.getTopic());
         evalReq.setQuestion(session.getQuestion());
         evalReq.setUserAnswer(request.getUserAnswer());
 
-        EvaluationResponseDTO evalRes = llmClient.evaluateAnswer(evalReq);
+        BaseResponseDTO<EvaluationResponseDTO> evalRes = llmClient.evaluateAnswer(evalReq);
 
         session.setUserAnswer(request.getUserAnswer());
-        session.setFeedback(evalRes.getFeedback());
+        EvaluationResponseDTO eval = evalRes.getData();
+        session.setFeedback(eval.getFeedback());
         session.setStatus("COMPLETED");
 
         PracticeSession updated = practiceSessionRepository.save(session);
@@ -71,4 +76,4 @@ public class SessionServiceImpl implements SessionService {
         dto.setStatus(session.getStatus());
         return dto;
     }
-    }
+}

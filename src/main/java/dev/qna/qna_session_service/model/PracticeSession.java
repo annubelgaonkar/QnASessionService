@@ -24,8 +24,12 @@ public class PracticeSession {
     private String topic;
     private String email;
     private String difficulty;
+
+    @Column(name = "question", columnDefinition = "LONGTEXT")
     private String question;
     private String userAnswer;
+
+    @Column(name = "feedback", columnDefinition = "LONGTEXT")
     private String feedback;
 
     private String status;

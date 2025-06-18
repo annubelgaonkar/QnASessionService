@@ -1,5 +1,6 @@
 package dev.qna.qna_session_service.controller;
 
+import dev.qna.qna_session_service.dto.BaseResponseDTO;
 import dev.qna.qna_session_service.dto.SessionResponseDTO;
 import dev.qna.qna_session_service.dto.StartSessionRequestDTO;
 import dev.qna.qna_session_service.dto.UpdateSessionRequestDTO;
@@ -18,14 +19,26 @@ public class SessionController {
     private final SessionService sessionService;
 
     @PostMapping("/start")
-    public ResponseEntity<SessionResponseDTO> startSession(
+    public ResponseEntity<BaseResponseDTO<SessionResponseDTO>> startSession(
             @RequestBody StartSessionRequestDTO requestDTO) {
         SessionResponseDTO response = sessionService.startSession(requestDTO);
-        return ResponseEntity.ok(response);
+        BaseResponseDTO<SessionResponseDTO> baseResponseDTO = new BaseResponseDTO<>(
+                true,
+                "Session started successfully",
+                response
+        );
+        return ResponseEntity.ok(baseResponseDTO);
     }
 
     @PostMapping("/update")
-    public SessionResponseDTO updateSession(@RequestBody UpdateSessionRequestDTO request) {
-        return sessionService.updateSession(request);
+    public ResponseEntity<BaseResponseDTO<SessionResponseDTO>> updateSession(
+            @RequestBody UpdateSessionRequestDTO request) {
+        SessionResponseDTO response = sessionService.updateSession(request);
+        BaseResponseDTO<SessionResponseDTO> baseResponseDTO = new BaseResponseDTO<>(
+                true,
+                "Session updated successfully",
+                response
+        );
+        return ResponseEntity.ok(baseResponseDTO);
     }
 }
