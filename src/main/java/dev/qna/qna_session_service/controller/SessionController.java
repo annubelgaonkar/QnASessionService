@@ -4,10 +4,8 @@ import dev.qna.qna_session_service.dto.BaseResponseDTO;
 import dev.qna.qna_session_service.dto.SessionResponseDTO;
 import dev.qna.qna_session_service.dto.StartSessionRequestDTO;
 import dev.qna.qna_session_service.dto.UpdateSessionRequestDTO;
-import dev.qna.qna_session_service.repository.PracticeSessionRepository;
 import dev.qna.qna_session_service.service.SessionService;
 import lombok.AllArgsConstructor;
-import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +15,10 @@ import org.springframework.web.bind.annotation.*;
 public class SessionController {
 
     private final SessionService sessionService;
-
+    /**To start a new session and then call LLMService
+     *
+     *
+     * */
     @PostMapping("/start")
     public ResponseEntity<BaseResponseDTO<SessionResponseDTO>> startSession(
             @RequestBody StartSessionRequestDTO requestDTO) {
