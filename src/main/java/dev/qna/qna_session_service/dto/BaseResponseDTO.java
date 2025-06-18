@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateSessionRequestDTO {
-    private Long sessionId;
-    private String userAnswer;
+public class BaseResponseDTO<T> {
+    private boolean success;
+    private String message;
+    private T data;
 }
