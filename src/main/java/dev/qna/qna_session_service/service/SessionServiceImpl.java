@@ -1,20 +1,20 @@
 package dev.qna.qna_session_service.service;
 
 import dev.qna.qna_session_service.Client.LLMClient;
-import dev.qna.qna_session_service.dto.BaseResponseDTO;
-import dev.qna.qna_session_service.dto.SessionResponseDTO;
-import dev.qna.qna_session_service.dto.StartSessionRequestDTO;
-import dev.qna.qna_session_service.dto.UpdateSessionRequestDTO;
+import dev.qna.qna_session_service.dto.*;
 import dev.qna.qna_session_service.dto.llm.EvaluationRequestDTO;
 import dev.qna.qna_session_service.dto.llm.EvaluationResponseDTO;
 import dev.qna.qna_session_service.dto.llm.QuestionRequestDTO;
 import dev.qna.qna_session_service.dto.llm.QuestionResponseDTO;
+import dev.qna.qna_session_service.exception.ResourceNotFoundException;
 import dev.qna.qna_session_service.exception.SessionNotFoundException;
 import dev.qna.qna_session_service.model.PracticeSession;
 import dev.qna.qna_session_service.repository.PracticeSessionRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -82,4 +82,27 @@ public class SessionServiceImpl implements SessionService {
         dto.setStatus(session.getStatus());
         return dto;
     }
+
+    @Override
+    public List<SessionSummaryDTO> getSessionHistory(String email){
+        List<PracticeSession> sessions = practiceSessionRepository.findByEmailOrderByIdDesc(email);
+        return sessions.stream()
+                .map(session -> new SessionSummaryDTO(
+                        session.getId(),
+                        session.getTopic(),
+                        session.getDifficulty(),
+                        session.getQuestion(),
+                        session.getUserAnswer(),
+                        session.getFeedback(),
+                        session.getCreatedAt()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public SessionResponseDTO getSessionDetails(Long sessionId){
+        PracticeSession session = practiceSessionRepository.findById(sessionId)
+                .orElseThrow(() -> new SessionNotFoundException("Session not found with id: " + sessionId));
+        return toDTO(session);
+    }
+
 }

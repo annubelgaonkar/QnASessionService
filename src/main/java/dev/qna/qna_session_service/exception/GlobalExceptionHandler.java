@@ -23,4 +23,13 @@ public class GlobalExceptionHandler {
                 HttpStatus.INTERNAL_SERVER_ERROR
         );
     }
+    @ExceptionHandler
+    public ResponseEntity<BaseResponseDTO<Object>> handleResourceNotFoundException(
+            ResourceNotFoundException ex){
+        BaseResponseDTO<Object> response = new BaseResponseDTO<>(
+                false,
+                ex.getMessage(),
+                null);
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
 }
