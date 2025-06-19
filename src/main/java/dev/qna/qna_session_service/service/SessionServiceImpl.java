@@ -13,6 +13,7 @@ import dev.qna.qna_session_service.exception.SessionNotFoundException;
 import dev.qna.qna_session_service.model.PracticeSession;
 import dev.qna.qna_session_service.repository.PracticeSessionRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,17 +25,22 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     public SessionResponseDTO startSession(StartSessionRequestDTO request) {
+        // Extract email from SecurityContext (set by JWT filter)
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        // Call LLM to generate a question
         QuestionRequestDTO questionReq = new QuestionRequestDTO(
                 request.getTopic(), request.getDifficulty());
+
         BaseResponseDTO<QuestionResponseDTO> questionRes = llmClient.generateQuestion(questionReq);
 
-        QuestionResponseDTO question = questionRes.getData();
+        QuestionResponseDTO questionResData = questionRes.getData();
 
         PracticeSession session = PracticeSession.builder()
-                .email(request.getEmail())
-                .topic(question.getTopic())
-                .difficulty(question.getDifficulty())
-                .question(question.getQuestionText())
+                .email(email)
+                .topic(questionResData.getTopic())
+                .difficulty(questionResData.getDifficulty())
+                .question(questionResData.getQuestionText())
                 .status("IN_PROGRESS")
                 .build();
 

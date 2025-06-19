@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StartSessionRequestDTO {
-    private String email;
     private String topic;
     private String difficulty;
 }
