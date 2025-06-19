@@ -25,11 +25,11 @@ public class PracticeSession {
     private String email;
     private String difficulty;
 
-    @Column(name = "question", columnDefinition = "LONGTEXT")
+    @Column(name = "question", columnDefinition = "TEXT")
     private String question;
     private String userAnswer;
 
-    @Column(name = "feedback", columnDefinition = "LONGTEXT")
+    @Column(name = "feedback", columnDefinition = "TEXT")
     private String feedback;
 
     private String status;
