@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 public class SessionResponseDTO {
 
     private Long sessionId;
-    private String email;
     private String topic;
     private String difficulty;
     private String question;

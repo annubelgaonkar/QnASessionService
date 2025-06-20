@@ -6,22 +6,25 @@ import dev.qna.qna_session_service.dto.llm.EvaluationRequestDTO;
 import dev.qna.qna_session_service.dto.llm.EvaluationResponseDTO;
 import dev.qna.qna_session_service.dto.llm.QuestionRequestDTO;
 import dev.qna.qna_session_service.dto.llm.QuestionResponseDTO;
-import dev.qna.qna_session_service.exception.ResourceNotFoundException;
 import dev.qna.qna_session_service.exception.SessionNotFoundException;
 import dev.qna.qna_session_service.model.PracticeSession;
 import dev.qna.qna_session_service.repository.PracticeSessionRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class SessionServiceImpl implements SessionService {
 
     private final PracticeSessionRepository practiceSessionRepository;
     private final LLMClient llmClient;
+
+    @Value("${session.history.truncate.length}")
+    private int truncateLength;
 
     @Override
     public SessionResponseDTO startSession(StartSessionRequestDTO request) {
@@ -73,7 +76,6 @@ public class SessionServiceImpl implements SessionService {
     private SessionResponseDTO toDTO(PracticeSession session) {
         SessionResponseDTO dto = new SessionResponseDTO();
         dto.setSessionId(session.getId());
-        dto.setEmail(session.getEmail());
         dto.setTopic(session.getTopic());
         dto.setDifficulty(session.getDifficulty());
         dto.setQuestion(session.getQuestion());
@@ -81,6 +83,11 @@ public class SessionServiceImpl implements SessionService {
         dto.setFeedback(session.getFeedback());
         dto.setStatus(session.getStatus());
         return dto;
+    }
+
+    private String truncate(String text) {
+        if (text == null) return null;
+        return text.length() <= truncateLength ? text : text.substring(0, truncateLength) + "...";
     }
 
     @Override
@@ -91,9 +98,9 @@ public class SessionServiceImpl implements SessionService {
                         session.getId(),
                         session.getTopic(),
                         session.getDifficulty(),
-                        session.getQuestion(),
-                        session.getUserAnswer(),
-                        session.getFeedback(),
+                        truncate(session.getQuestion()),
+                        truncate(session.getUserAnswer()),
+                        truncate(session.getFeedback()),
                         session.getCreatedAt()))
                 .collect(Collectors.toList());
     }
