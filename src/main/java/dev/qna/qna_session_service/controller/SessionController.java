@@ -48,23 +48,25 @@ public class SessionController {
         return ResponseEntity.ok(baseResponseDTO);
     }
 
-    /**Returns a list of past sessions for the logged in user without detail feedback
+    /**Returns a list of past sessions for the logged in user without detailed feedback, question, and useranswer
      *
      * */
     @GetMapping("/history")
     public ResponseEntity<BaseResponseDTO<List<SessionSummaryDTO>>> getSessionHistory(
-            @RequestHeader("Authorization") String token){
+            @RequestHeader("Authorization") String token,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size){
 
-            String email = jwtUtil.extractEmail(token.substring(7));
-            List<SessionSummaryDTO> history = sessionService.getSessionHistory(email);
-            return ResponseEntity.ok(new BaseResponseDTO<>(
-                    true,
-                    "History fetched successfully",
-                    history
-            ));
+        String email = jwtUtil.extractEmail(token.substring(7));
+        List<SessionSummaryDTO> history = sessionService.getSessionHistory(email, page, size);
+        return ResponseEntity.ok(new BaseResponseDTO<>(
+                true,
+                "History fetched successfully",
+                history
+        ));
     }
 
-    /** Return details (question, userAnswer, detailed feedback) for a specific session ID.
+    /** Return details (detailed question, userAnswer, feedback) for a specific session ID.
      *
      * */
 

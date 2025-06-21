@@ -10,6 +10,6 @@ public interface SessionService {
 
     SessionResponseDTO startSession(StartSessionRequestDTO request);
     SessionResponseDTO updateSession(UpdateSessionRequestDTO request);
-    List<SessionSummaryDTO> getSessionHistory(String email);
+    List<SessionSummaryDTO> getSessionHistory(String email, int page, int size);
     SessionResponseDTO getSessionDetails(Long sessionId);
 }

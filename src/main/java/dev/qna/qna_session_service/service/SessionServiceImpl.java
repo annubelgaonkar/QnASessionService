@@ -11,6 +11,10 @@ import dev.qna.qna_session_service.model.PracticeSession;
 import dev.qna.qna_session_service.repository.PracticeSessionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -91,9 +95,10 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public List<SessionSummaryDTO> getSessionHistory(String email){
-        List<PracticeSession> sessions = practiceSessionRepository.findByEmailOrderByIdDesc(email);
-        return sessions.stream()
+    public List<SessionSummaryDTO> getSessionHistory(String email, int page, int size){
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id"));
+        Page<PracticeSession> sessionPage = practiceSessionRepository.findByEmail(email, pageable);
+        return sessionPage.stream()
                 .map(session -> new SessionSummaryDTO(
                         session.getId(),
                         session.getTopic(),
