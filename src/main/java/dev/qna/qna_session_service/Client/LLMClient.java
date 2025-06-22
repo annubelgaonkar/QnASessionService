@@ -9,7 +9,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "qna-question-service", url = "http://localhost:8087/llm")
+@FeignClient(name = "qna-question-service", url = "${llm.service.base-url}")
 public interface LLMClient {
 
     //to communicate with LLMService
