@@ -14,9 +14,9 @@ public interface LLMClient {
 
     //to communicate with LLMService
 
-    @PostMapping("/generate")
+    @PostMapping("/llm/generate")
     BaseResponseDTO<QuestionResponseDTO> generateQuestion(@RequestBody QuestionRequestDTO request);
 
-    @PostMapping("/evaluate")
+    @PostMapping("/llm/evaluate")
     BaseResponseDTO<EvaluationResponseDTO> evaluateAnswer(@RequestBody EvaluationRequestDTO request);
 }
