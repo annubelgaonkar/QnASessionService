@@ -28,6 +28,8 @@ public class PracticeSession {
 
     @Column(name = "question", columnDefinition = "TEXT")
     private String question;
+
+    @Column(name = "userAnswer", columnDefinition = "TEXT")
     private String userAnswer;
 
     @Column(name = "feedback", columnDefinition = "TEXT")
