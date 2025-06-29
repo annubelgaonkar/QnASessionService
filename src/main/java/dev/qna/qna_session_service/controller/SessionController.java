@@ -24,7 +24,13 @@ public class SessionController {
     @PostMapping("/start")
     public ResponseEntity<BaseResponseDTO<SessionResponseDTO>> startSession(
             @RequestBody StartSessionRequestDTO requestDTO) {
+
+        if(requestDTO == null){
+            throw new IllegalArgumentException("Request body cannot be null");
+        }
+
         SessionResponseDTO response = sessionService.startSession(requestDTO);
+
         BaseResponseDTO<SessionResponseDTO> baseResponseDTO = new BaseResponseDTO<>(
                 true,
                 "Session started successfully",
@@ -39,6 +45,11 @@ public class SessionController {
     @PostMapping("/update")
     public ResponseEntity<BaseResponseDTO<SessionResponseDTO>> updateSession(
             @RequestBody UpdateSessionRequestDTO request) {
+
+        if(request == null){
+            throw new IllegalArgumentException("Request body cannot be called");
+        }
+
         SessionResponseDTO response = sessionService.updateSession(request);
         BaseResponseDTO<SessionResponseDTO> baseResponseDTO = new BaseResponseDTO<>(
                 true,
@@ -57,8 +68,15 @@ public class SessionController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size){
 
+
+        if(token == null || !token.startsWith("Bearer ")){
+            throw new IllegalArgumentException("Invalid or missing Authorization token");
+        }
+
         String email = jwtUtil.extractEmail(token.substring(7));
+
         List<SessionSummaryDTO> history = sessionService.getSessionHistory(email, page, size);
+
         return ResponseEntity.ok(new BaseResponseDTO<>(
                 true,
                 "History fetched successfully",

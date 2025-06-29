@@ -35,7 +35,7 @@ public class SessionServiceImpl implements SessionService {
         // Extract email from SecurityContext (set by JWT filter)
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        // Call LLM to generate a question
+        // If no existing session, Call LLM to generate a question
         QuestionRequestDTO questionReq = new QuestionRequestDTO(
                 request.getTopic(), request.getDifficulty());
 
