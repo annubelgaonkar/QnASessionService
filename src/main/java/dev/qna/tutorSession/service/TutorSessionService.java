@@ -21,6 +21,7 @@ public class TutorSessionService {
 
 
     public StartSessionResponseDTO startSession(StartSessionRequestDTO requestDTO){
+        //extract userId from token
         Long userId = extractUserIdFromToken(requestDTO.getToken());
 
         //create a session
@@ -43,7 +44,7 @@ public class TutorSessionService {
 
         //Return DTO
         StartSessionResponseDTO responseDTO = new StartSessionResponseDTO();
-        requestDTO.setSessionId(session.getId());
+        responseDTO.setSessionId(session.getId());
         responseDTO.setQuestionIdList(List.of(question.getId()));
         return responseDTO;
     }
