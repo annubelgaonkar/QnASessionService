@@ -1,0 +1,23 @@
+package dev.qna.tutorSession.model;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.*;
+
+@Entity
+@RequiredArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+public class Question {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private Long sessionId;
+    private String questionText;
+
+}
