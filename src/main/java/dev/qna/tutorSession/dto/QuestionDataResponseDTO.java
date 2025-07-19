@@ -12,5 +12,5 @@ import lombok.Setter;
 public class QuestionDataResponseDTO {
     private Long questionId;
     private String question;
-    private String answer;
+    private String answer;          //will be null because this dto is for generating question only
 }

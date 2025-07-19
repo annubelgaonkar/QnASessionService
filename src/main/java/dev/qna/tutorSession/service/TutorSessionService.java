@@ -57,7 +57,7 @@ public class TutorSessionService {
         QuestionDataResponseDTO dto = new QuestionDataResponseDTO();
         dto.setQuestionId(question.getId());
         dto.setQuestion(question.getQuestionText());
-        dto.setAnswer(question.getUserAnswer());
+        dto.setAnswer(null);
         return dto;
     }
 
@@ -83,6 +83,27 @@ public class TutorSessionService {
         TutorSession session = tutorSessionRepository.findById(requestDTO.getSessionId())
                 .orElseThrow(() -> new RuntimeException("Session not found"));
 
+        session.getQuestionIdList().add(nextQuestion.getId());
+        tutorSessionRepository.save(session);
 
+        //Respond with updated question ID List
+        AnswerEvaluationResponseDTO response = new AnswerEvaluationResponseDTO();
+        response.setQuestionIdsList(session.getQuestionIdList());
+        return response;
+    }
+
+    public SessionStatusDTO endSession(Long sessionId){
+        TutorSession session = tutorSessionRepository.findById(sessionId)
+                .orElseThrow(() -> new RuntimeException("Session not found"));
+        session.setActive(false);
+        tutorSessionRepository.save(session);
+
+        SessionStatusDTO dto = new SessionStatusDTO();
+        dto.setStatus("INACTIVE");
+        return dto;
+    }
+
+    private Long extractUserIdFromToken(String token){
+        return Math.abs(token.hashCode()) % 1000L + 1L;
     }
 }
