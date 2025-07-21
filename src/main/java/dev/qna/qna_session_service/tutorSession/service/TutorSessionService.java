@@ -1,7 +1,7 @@
-package dev.qna.tutorSession.service;
+package dev.qna.qna_session_service.tutorSession.service;
 
 
-import dev.qna.tutorSession.dto.*;
+import dev.qna.qna_session_service.tutorSession.dto.*;
 
 public interface TutorSessionService {
     StartSessionResponseDTO startSession(StartSessionRequestDTO requestDTO);

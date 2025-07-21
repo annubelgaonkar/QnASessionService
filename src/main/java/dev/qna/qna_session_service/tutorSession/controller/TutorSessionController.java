@@ -1,10 +1,8 @@
-package dev.qna.tutorSession.controller;
+package dev.qna.qna_session_service.tutorSession.controller;
 
-import dev.qna.tutorSession.dto.*;
-import dev.qna.tutorSession.service.TutorSessionService;
-import lombok.AllArgsConstructor;
+import dev.qna.qna_session_service.tutorSession.dto.*;
+import dev.qna.qna_session_service.tutorSession.service.TutorSessionService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +13,11 @@ public class TutorSessionController {
 
     private final TutorSessionService tutorSessionService;
 
+    //test method
+    @GetMapping("/hello")
+    public String sayHello(){
+        return "Hello from spring boot";
+    }
     // 1. Start a new session
     @PostMapping("/start")
     public ResponseEntity<StartSessionResponseDTO> startSession(

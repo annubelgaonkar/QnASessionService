@@ -1,4 +1,4 @@
-package dev.qna.tutorSession.dto;
+package dev.qna.qna_session_service.tutorSession.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

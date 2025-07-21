@@ -1,6 +1,6 @@
-package dev.qna.tutorSession.repository;
+package dev.qna.qna_session_service.tutorSession.repository;
 
-import dev.qna.tutorSession.model.TutorSession;
+import dev.qna.qna_session_service.tutorSession.model.TutorSession;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

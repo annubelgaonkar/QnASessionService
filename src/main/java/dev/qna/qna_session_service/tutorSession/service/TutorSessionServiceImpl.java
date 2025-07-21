@@ -1,13 +1,13 @@
-package dev.qna.tutorSession.service;
+package dev.qna.qna_session_service.tutorSession.service;
 
 //import dev.qna.qna_session_service.Client.LLMClient;
-import dev.qna.tutorSession.client.LLMClient;
-import dev.qna.tutorSession.dto.*;
-import dev.qna.tutorSession.dto.llm.EvaluateAnswerResponse;
-import dev.qna.tutorSession.model.Question;
-import dev.qna.tutorSession.model.TutorSession;
-import dev.qna.tutorSession.repository.QuestionRepository;
-import dev.qna.tutorSession.repository.TutorSessionRepository;
+import dev.qna.qna_session_service.tutorSession.client.LLMClient;
+import dev.qna.qna_session_service.tutorSession.dto.*;
+import dev.qna.qna_session_service.tutorSession.dto.llm.EvaluateAnswerResponse;
+import dev.qna.qna_session_service.tutorSession.model.Question;
+import dev.qna.qna_session_service.tutorSession.model.TutorSession;
+import dev.qna.qna_session_service.tutorSession.repository.QuestionRepository;
+import dev.qna.qna_session_service.tutorSession.repository.TutorSessionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,9 +1,9 @@
-package dev.qna.tutorSession.client;
+package dev.qna.qna_session_service.tutorSession.client;
 
-import dev.qna.tutorSession.dto.llm.EvaluateAnswerRequest;
-import dev.qna.tutorSession.dto.llm.EvaluateAnswerResponse;
-import dev.qna.tutorSession.dto.llm.GenerateQuestionRequestDTO;
-import dev.qna.tutorSession.dto.llm.GenerateQuestionResponseDTO;
+import dev.qna.qna_session_service.tutorSession.dto.llm.EvaluateAnswerRequest;
+import dev.qna.qna_session_service.tutorSession.dto.llm.EvaluateAnswerResponse;
+import dev.qna.qna_session_service.tutorSession.dto.llm.GenerateQuestionRequestDTO;
+import dev.qna.qna_session_service.tutorSession.dto.llm.GenerateQuestionResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

@@ -1,15 +1,17 @@
-package dev.qna.tutorSession.exception;
+package dev.qna.qna_session_service.tutorSession.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
-import dev.qna.tutorSession.dto.ErrorResponse;
+import dev.qna.qna_session_service.tutorSession.dto.ErrorResponse;
 import org.springframework.web.context.request.WebRequest;
 
 
 import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 
+@Component("tutorGlobalExceptionHandler")
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
