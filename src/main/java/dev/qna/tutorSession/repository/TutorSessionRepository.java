@@ -2,7 +2,8 @@ package dev.qna.tutorSession.repository;
 
 import dev.qna.tutorSession.model.TutorSession;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public class TutorSessionRepository extends JpaRepository<TutorSession, Long> {
-
+@Repository
+public interface TutorSessionRepository extends JpaRepository<TutorSession, Long> {
 }

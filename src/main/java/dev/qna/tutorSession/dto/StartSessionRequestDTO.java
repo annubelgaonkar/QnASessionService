@@ -10,7 +10,5 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StartSessionRequestDTO {
-
-    private String token;
     private String topic;
 }
