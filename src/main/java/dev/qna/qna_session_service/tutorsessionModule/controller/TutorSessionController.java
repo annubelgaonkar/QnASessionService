@@ -1,10 +1,12 @@
-package dev.qna.tutorSession.controller;
+package dev.qna.qna_session_service.tutorsessionModule.controller;
 
-import dev.qna.tutorSession.dto.*;
-import dev.qna.tutorSession.service.TutorSessionService;
-import lombok.AllArgsConstructor;
+import dev.qna.qna_session_service.dto.StartSessionRequestDTO;
+import dev.qna.qna_session_service.tutorsessionModule.dto.EvaluateAnswerRequestDTO;
+import dev.qna.qna_session_service.tutorsessionModule.dto.QuestionDataResponseDTO;
+import dev.qna.qna_session_service.tutorsessionModule.dto.QuestionIdsResponseDTO;
+import dev.qna.qna_session_service.tutorsessionModule.dto.StartSessionResponseDTO;
+import dev.qna.qna_session_service.tutorsessionModule.service.TutorSessionService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +25,7 @@ public class TutorSessionController {
     }
 
     // 2. Get question data by ID
-    @GetMapping("/questions/{questionId}")
+    @GetMapping("/question/{questionId}")
     public ResponseEntity<QuestionDataResponseDTO> getQuestion(@PathVariable Long questionId){
         return ResponseEntity.ok(tutorSessionService.getQuestionById(questionId));
     }

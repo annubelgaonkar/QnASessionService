@@ -1,4 +1,4 @@
-package dev.qna.tutorSession.dto.llm;
+package dev.qna.qna_session_service.tutorsessionModule.dto.llm;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class GenerateQuestionResponseDTO {
+public class GenerateQuestionRequestDTO {
+    private String topic;
 
-    private String question;
 }

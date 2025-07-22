@@ -1,17 +1,18 @@
-package dev.qna.tutorSession.client;
+package dev.qna.qna_session_service.tutorsessionModule.client;
 
-import dev.qna.tutorSession.dto.llm.EvaluateAnswerRequest;
-import dev.qna.tutorSession.dto.llm.EvaluateAnswerResponse;
-import dev.qna.tutorSession.dto.llm.GenerateQuestionRequestDTO;
-import dev.qna.tutorSession.dto.llm.GenerateQuestionResponseDTO;
+import dev.qna.qna_session_service.tutorsessionModule.dto.llm.EvaluateAnswerRequest;
+import dev.qna.qna_session_service.tutorsessionModule.dto.llm.EvaluateAnswerResponse;
+import dev.qna.qna_session_service.tutorsessionModule.dto.llm.GenerateQuestionRequestDTO;
+import dev.qna.qna_session_service.tutorsessionModule.dto.llm.GenerateQuestionResponseDTO;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Component
-@RequiredArgsConstructor
 @Slf4j
+@AllArgsConstructor
 public class LLMClient {
 
     private final WebClient webClient;
@@ -21,7 +22,7 @@ public class LLMClient {
             GenerateQuestionRequestDTO request =
                     new GenerateQuestionRequestDTO(topic);
             GenerateQuestionResponseDTO response = webClient.post()
-                    .uri("/generate-question")
+                    .uri("/llm/generate")
                     .bodyValue(request)
                     .retrieve()
                     .bodyToMono(GenerateQuestionResponseDTO.class)
@@ -38,7 +39,7 @@ public class LLMClient {
         try{
             EvaluateAnswerRequest request = new EvaluateAnswerRequest(question, answer);
             return webClient.post()
-                    .uri("/evaluate")
+                    .uri("/llm/evaluate")
                     .bodyValue(request)
                     .retrieve()
                     .bodyToMono(EvaluateAnswerResponse.class)

@@ -1,4 +1,4 @@
-package dev.qna.tutorSession.model;
+package dev.qna.qna_session_service.tutorsessionModule.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,8 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter

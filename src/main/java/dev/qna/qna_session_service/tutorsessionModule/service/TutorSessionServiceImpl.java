@@ -1,13 +1,17 @@
-package dev.qna.tutorSession.service;
+package dev.qna.qna_session_service.tutorsessionModule.service;
 
-//import dev.qna.qna_session_service.Client.LLMClient;
-import dev.qna.tutorSession.client.LLMClient;
-import dev.qna.tutorSession.dto.*;
-import dev.qna.tutorSession.dto.llm.EvaluateAnswerResponse;
-import dev.qna.tutorSession.model.Question;
-import dev.qna.tutorSession.model.TutorSession;
-import dev.qna.tutorSession.repository.QuestionRepository;
-import dev.qna.tutorSession.repository.TutorSessionRepository;
+
+import dev.qna.qna_session_service.tutorsessionModule.client.LLMClient;
+import dev.qna.qna_session_service.dto.StartSessionRequestDTO;
+import dev.qna.qna_session_service.tutorsessionModule.dto.EvaluateAnswerRequestDTO;
+import dev.qna.qna_session_service.tutorsessionModule.dto.QuestionDataResponseDTO;
+import dev.qna.qna_session_service.tutorsessionModule.dto.QuestionIdsResponseDTO;
+import dev.qna.qna_session_service.tutorsessionModule.dto.StartSessionResponseDTO;
+import dev.qna.qna_session_service.tutorsessionModule.dto.llm.EvaluateAnswerResponse;
+import dev.qna.qna_session_service.tutorsessionModule.model.Question;
+import dev.qna.qna_session_service.tutorsessionModule.model.TutorSession;
+import dev.qna.qna_session_service.tutorsessionModule.repository.QuestionRepository;
+import dev.qna.qna_session_service.tutorsessionModule.repository.TutorSessionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +20,7 @@ import java.util.NoSuchElementException;
 
 @RequiredArgsConstructor
 @Service
-public class TutorSessionServiceImpl implements TutorSessionService{
+public class TutorSessionServiceImpl implements TutorSessionService {
 
     private final TutorSessionRepository tutorSessionRepository;
     private final QuestionRepository questionRepository;

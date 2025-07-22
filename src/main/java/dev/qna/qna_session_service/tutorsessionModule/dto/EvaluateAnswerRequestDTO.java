@@ -1,4 +1,4 @@
-package dev.qna.tutorSession.dto;
+package dev.qna.qna_session_service.tutorsessionModule.dto;
 
 import lombok.*;
 

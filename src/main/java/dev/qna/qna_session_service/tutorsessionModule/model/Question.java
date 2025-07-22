@@ -1,4 +1,4 @@
-package dev.qna.tutorSession.model;
+package dev.qna.qna_session_service.tutorsessionModule.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
