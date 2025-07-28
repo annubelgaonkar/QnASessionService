@@ -6,11 +6,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
+
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
+@Table(name = "question")
 public class Question {
 
     @Id

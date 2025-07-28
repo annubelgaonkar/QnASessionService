@@ -11,9 +11,10 @@ import java.util.List;
 
 @Setter
 @Getter
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
+@Table(name = "tutor_session")
 public class TutorSession {
 
     @Id

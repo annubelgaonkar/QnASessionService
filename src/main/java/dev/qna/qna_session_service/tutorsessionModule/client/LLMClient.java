@@ -1,12 +1,10 @@
 package dev.qna.qna_session_service.tutorsessionModule.client;
 
-import dev.qna.qna_session_service.tutorsessionModule.dto.llm.EvaluateAnswerRequest;
-import dev.qna.qna_session_service.tutorsessionModule.dto.llm.EvaluateAnswerResponse;
-import dev.qna.qna_session_service.tutorsessionModule.dto.llm.GenerateQuestionRequestDTO;
-import dev.qna.qna_session_service.tutorsessionModule.dto.llm.GenerateQuestionResponseDTO;
+import dev.qna.qna_session_service.tutorsessionModule.dto.llm.*;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -21,14 +19,17 @@ public class LLMClient {
         try{
             GenerateQuestionRequestDTO request =
                     new GenerateQuestionRequestDTO(topic);
-            GenerateQuestionResponseDTO response = webClient.post()
-                    .uri("/llm/generate")
+            BaseResponseDTO<GenerateQuestionResponseDTO> response = webClient.post()
+                    .uri("/llm/generateTutor")
                     .bodyValue(request)
                     .retrieve()
-                    .bodyToMono(GenerateQuestionResponseDTO.class)
+                    .bodyToMono(new ParameterizedTypeReference<BaseResponseDTO<GenerateQuestionResponseDTO>>() {
+                    })
                     .block();
 
-            return response != null ? response.getQuestion() : null;
+            return response != null && response.getData() != null
+                    ? response.getData().getQuestion()
+                    : null;
         }catch (Exception ex){
             log.error("Error generating question from LLM", ex);
             throw new RuntimeException("Failed to generate question");
@@ -38,12 +39,15 @@ public class LLMClient {
     public EvaluateAnswerResponse evaluateAnswer(String question, String answer){
         try{
             EvaluateAnswerRequest request = new EvaluateAnswerRequest(question, answer);
-            return webClient.post()
+
+            BaseResponseDTO<EvaluateAnswerResponse> response = webClient.post()
                     .uri("/llm/evaluate")
                     .bodyValue(request)
                     .retrieve()
-                    .bodyToMono(EvaluateAnswerResponse.class)
+                    .bodyToMono(new ParameterizedTypeReference<BaseResponseDTO<EvaluateAnswerResponse>>() {})
                     .block();
+
+            return response != null ? response.getData() : null;
         } catch (Exception ex){
             log.error("Error evaluating answer via LLM", ex);
             throw  new RuntimeException("Failed to evaluate answer");

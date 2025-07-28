@@ -31,6 +31,7 @@ public class TutorSessionServiceImpl implements TutorSessionService {
 
         //Call LLM to generate the first question
         String questionText = llmClient.generateFirstQuestion(request.getTopic());
+        System.out.println("Generated question: " + questionText);
 
         // Create session
         TutorSession session = new TutorSession();
