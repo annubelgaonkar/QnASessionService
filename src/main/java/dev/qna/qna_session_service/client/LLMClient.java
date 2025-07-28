@@ -1,4 +1,4 @@
-package dev.qna.qna_session_service.Client;
+package dev.qna.qna_session_service.client;
 
 import dev.qna.qna_session_service.dto.BaseResponseDTO;
 import dev.qna.qna_session_service.dto.llm.EvaluationRequestDTO;

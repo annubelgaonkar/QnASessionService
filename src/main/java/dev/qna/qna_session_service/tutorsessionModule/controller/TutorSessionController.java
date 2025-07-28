@@ -39,8 +39,6 @@ public class TutorSessionController {
                 question.getQuestionText(),          //is this null?
                 null
         ));
-
-
     }
 
     // 3. Evaluate user's answer

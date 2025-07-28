@@ -1,6 +1,6 @@
 package dev.qna.qna_session_service.service;
 
-import dev.qna.qna_session_service.Client.LLMClient;
+import dev.qna.qna_session_service.client.LLMClient;
 import dev.qna.qna_session_service.dto.*;
 import dev.qna.qna_session_service.dto.llm.EvaluationRequestDTO;
 import dev.qna.qna_session_service.dto.llm.EvaluationResponseDTO;

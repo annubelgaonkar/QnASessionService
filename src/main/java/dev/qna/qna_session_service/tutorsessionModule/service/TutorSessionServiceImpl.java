@@ -8,6 +8,7 @@ import dev.qna.qna_session_service.tutorsessionModule.dto.QuestionDataResponseDT
 import dev.qna.qna_session_service.tutorsessionModule.dto.QuestionIdsResponseDTO;
 import dev.qna.qna_session_service.tutorsessionModule.dto.StartSessionResponseDTO;
 import dev.qna.qna_session_service.tutorsessionModule.dto.llm.EvaluateAnswerResponse;
+import dev.qna.qna_session_service.tutorsessionModule.dto.llm.EvaluationResponseForTutorDTO;
 import dev.qna.qna_session_service.tutorsessionModule.model.Question;
 import dev.qna.qna_session_service.tutorsessionModule.model.TutorSession;
 import dev.qna.qna_session_service.tutorsessionModule.repository.QuestionRepository;
@@ -81,8 +82,8 @@ public class TutorSessionServiceImpl implements TutorSessionService {
         questionRepository.save(exitingQuestion);
 
         // Call LLM for feedback and next question
-        EvaluateAnswerResponse llmResponse = llmClient.evaluateAnswer(
-                exitingQuestion.getQuestionText(), userAnswer);
+        EvaluationResponseForTutorDTO llmResponse = llmClient.evaluateAnswerForTutor(
+                session.getTopic(), exitingQuestion.getQuestionText(),userAnswer);
 
         // Save new question
         Question nextQ = new Question();
